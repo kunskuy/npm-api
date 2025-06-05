@@ -2,11 +2,12 @@
   "name": "mahasiswa-api-firebase",
   "version": "1.0.0",
   "description": "API CRUD Mahasiswa dengan Firebase Realtime Database",
-  "main": "api/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "node api/index.js",
-    "dev": "nodemon --exec ts-node api/index.ts",
-    "build": "tsc"
+    "start": "node dist/index.js",
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "build": "tsc",
+    "vercel-build": "tsc"
   },
   "dependencies": {
     "dotenv": "^16.5.0",
