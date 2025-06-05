@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 // Middleware untuk parse JSON pada request body
 app.use(express.json());
 
-// Middleware untuk CORS (opsional, jika diperlukan)
+// Middleware untuk CORS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -15,7 +15,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Route root '/', memberikan response JSON info API versi dan status
+// Route root
 app.get('/', (req: Request, res: Response): void => {
   res.json({
     message: 'API Mahasiswa dengan Firebase v2.0',
@@ -31,7 +31,6 @@ app.get('/', (req: Request, res: Response): void => {
   });
 });
 
-// Pasang router mahasiswa pada path '/mahasiswa'
 app.use('/mahasiswa', mahasiswaRoutes);
 
 // Error handling middleware
@@ -40,24 +39,17 @@ app.use((err: any, req: Request, res: Response, next: NextFunction): void => {
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
-// Handle 404 untuk route yang tidak ditemukan
+// Handle 404
 app.use('*', (req: Request, res: Response): void => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-// Jalankan server di port yang ditentukan
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-  console.log('Firebase Realtime Database connected');
-});
-
-// Export app untuk Vercel
+// Export untuk Vercel (PENTING!)
 export default app;
 
-// Jalankan server hanya jika tidak di environment Vercel
+// Local development only
 if (process.env.NODE_ENV !== 'production') {
   app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
-    console.log('Firebase Realtime Database connected');
   });
 }
