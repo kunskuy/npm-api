@@ -1,9 +1,8 @@
-// src/index.ts
 import express, { Request, Response, NextFunction } from 'express';
 import mahasiswaRoutes from './routes/mahasiswa';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware untuk parse JSON pada request body
 app.use(express.json());
@@ -51,3 +50,14 @@ app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
   console.log('Firebase Realtime Database connected');
 });
+
+// Export app untuk Vercel
+export default app;
+
+// Jalankan server hanya jika tidak di environment Vercel
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+    console.log('Firebase Realtime Database connected');
+  });
+}
